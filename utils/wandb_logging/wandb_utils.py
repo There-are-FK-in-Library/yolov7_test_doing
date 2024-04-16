@@ -82,6 +82,7 @@ class WandbLogger():
         # Pre-training routine --
         self.job_type = job_type
         self.wandb, self.wandb_run, self.data_dict = wandb, None if not wandb else wandb.run, data_dict
+        # self.wandb.config(allow_val_change = True)
         # It's more elegant to stick to 1 wandb.init call, but useful config data is overwritten in the WandbLogger's wandb.init call
         if isinstance(opt.resume, str):  # checks resume from artifact
             if opt.resume.startswith(WANDB_ARTIFACT_PREFIX):
@@ -103,6 +104,7 @@ class WandbLogger():
                 if not opt.resume:
                     wandb_data_dict = self.check_and_upload_dataset(opt) if opt.upload_dataset else data_dict
                     # Info useful for resuming from artifacts
+                    # self.wandb_run.config.update(allow_val_change=True)
                     self.wandb_run.config.opt = vars(opt)
                     self.wandb_run.config.data_dict = wandb_data_dict
                 self.data_dict = self.setup_training(opt, data_dict)

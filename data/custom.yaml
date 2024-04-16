@@ -1,0 +1,9 @@
+train: ./BDD100k/train.txt  # 118287 images
+val: ./BDD100k/val.txt  # 5000 images
+test: ./BDD100k/test.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+# number of classes
+nc: 4
+
+# class names
+names: [ "car", "pedestrian", "truck", "bus" ]

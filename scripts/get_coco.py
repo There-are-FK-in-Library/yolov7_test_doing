@@ -15,7 +15,8 @@ os.remove(filename)
 # Download/unzip images
 output_dir = '../coco/images'  # unzip directory
 url = 'http://images.cocodataset.org/zips/'
-filenames = ['train2017.zip', 'val2017.zip', 'test2017.zip']  # 19G, 1G, 7G respectively (optional)
+# filenames = ['train2017.zip', 'val2017.zip', 'test2017.zip']  # 19G, 1G, 7G respectively (optional)
+filenames = ['val2017.zip']  # 19G, 1G, 7G respectively (optional)
 for filename in filenames:
     print('Downloading', url + filename, '...')
     urllib.request.urlretrieve(url + filename, filename)
