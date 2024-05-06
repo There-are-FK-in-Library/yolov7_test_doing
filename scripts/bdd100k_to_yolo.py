@@ -46,20 +46,29 @@ class Bdd2yolov5:
             if SPLIT=="train":
                 numbers_start=0
                 numbers_end = 5000
-            elif SPLIT=="val":
+            if SPLIT == "val":
                 numbers_start = 5001
-                numbers_end = 6000
-            else:
+                numbers_end = 7000
+            if SPLIT == "test":
                 numbers_start = 7001
-                numbers_end = 8000
+                numbers_end = 9000
+
 
             for fr in j[numbers_start:numbers_end]:
-                lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format(SPLIT,fr["name"])
+                if "labels" not in fr:
+                    continue
+
+                lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format("train",fr["name"])
+                # if SPLIT is "test":
+                #     lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format("val",fr["name"])
                 lines_dirs +=lines_dir
                 lines = ""
                 dw = 1.0 / self.bdd100k_width
                 dh = 1.0 / self.bdd100k_height
+
+
                 for obj in fr["labels"]:
+
                     category = obj["category"]
                     # if (category == "traffic light"):
                     #     color = obj['attributes']['trafficLightColor']
@@ -79,6 +88,7 @@ class Bdd2yolov5:
                         cx, cy, w, h = cx * dw, cy * dh, w * dw, h * dh
                         line = f"{idx} {cx:.6f} {cy:.6f} {w:.6f} {h:.6f}\n"
                         lines += line
+
                 if len(lines) != 0:
                     # 转换后的以*.txt结尾的标注文件放到指定目录save_txt_path位置
                     yolo_txt = fr["name"].replace(".jpg", ".txt")
@@ -88,13 +98,15 @@ class Bdd2yolov5:
                         fp2.writelines(lines)
                     # print("%s has been dealt!" % path)
 
-            if len(lines_dir) != 0:
+
+
+            if len(lines_dirs) != 0:
 
                 yolo_txt_train = "../BDD100k/{}.txt".format(SPLIT)
                 with open(yolo_txt_train, 'w') as fp2:
                     fp2.writelines(lines_dirs)
 
-SPLITs=["train","val"]
+SPLITs=["train","val","test"]
 if __name__ == "__main__":
     for SPLIT in SPLITs:
         bdd_label_dir = "../BDD100k/train_label/det_train.json"

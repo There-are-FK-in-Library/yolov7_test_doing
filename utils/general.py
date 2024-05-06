@@ -1,5 +1,5 @@
 # YOLOR general utils
-
+import datetime
 import glob
 import logging
 import math
@@ -9,6 +9,7 @@ import random
 import re
 import subprocess
 import time
+
 from pathlib import Path
 
 import cv2
@@ -46,7 +47,11 @@ def init_seeds(seed=0):
 def get_latest_run(search_dir='.'):
     # Return path to most recent 'last.pt' in /runs (i.e. to --resume from)
     last_list = glob.glob(f'{search_dir}/**/last*.pt', recursive=True)
-    return max(last_list, key=os.path.getctime) if last_list else ''
+    # for it in last_list:
+    #
+    #     create_time_str = datetime.datetime.fromtimestamp(os.path.getmtime(it)).strftime('%Y-%m-%d %H:%M:%S')
+    #     print(it,"   ",create_time_str)
+    return max(last_list, key=os.path.getmtime) if last_list else ''
 
 
 def isdocker():
