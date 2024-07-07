@@ -38,6 +38,26 @@ class Bdd2yolov5:
 
     def bdd2yolov5(self, path, save_txt_path):  # 输入一张图片的标签
 
+        if os.path.exists("../BDD100k/{}.txt".format(SPLIT)):
+            try:
+                os.remove("../BDD100k/{}.txt".format(SPLIT))
+                print("文件已删除.")
+            except OSError as e:
+                print(f"删除文件时出错: {e}")
+        else:
+            print("文件不存在.")
+
+        for filename in os.listdir(save_txt_path):
+            if filename.endswith(".txt"):
+                # 构建完整的文件路径
+                file_path = os.path.join(save_txt_path, filename)
+                try:
+                    # 删除文件
+                    os.remove(file_path)
+
+                except OSError as e:
+                    print(f"删除文件 {filename} 时出错: {e}")
+
         with open(path) as fp:
             j = json.load(fp)
             # if self._filter_by_attr(j['attributes']):  # 过滤掉晚上的图片
@@ -51,14 +71,14 @@ class Bdd2yolov5:
                 numbers_end = 7000
             if SPLIT == "test":
                 numbers_start = 7001
-                numbers_end = 9000
+                numbers_end = 9050
 
 
             for fr in j[numbers_start:numbers_end]:
                 if "labels" not in fr:
                     continue
 
-                lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format("train",fr["name"])
+                lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format(SPLIT,fr["name"])
                 # if SPLIT is "test":
                 #     lines_dir="F:/yolov7_test_doing/BDD100k/images/{}/{}\n".format("val",fr["name"])
                 lines_dirs +=lines_dir

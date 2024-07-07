@@ -289,9 +289,9 @@ def test(data,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp5/weights/last.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp3/weights/best.pt', help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='data/custom.yaml', help='*.data path')
-    parser.add_argument('--batch-size', type=int, default=12, help='size of each image batch')
+    parser.add_argument('--batch-size', type=int, default=16, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=1280, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.65, help='IOU threshold for NMS')
@@ -310,7 +310,7 @@ if __name__ == '__main__':
     parser.add_argument('--no-trace', action='store_true', help='don`t trace model')
     parser.add_argument('--v5-metric', action='store_true', help='assume maximum recall as 1.0 in AP calculation')
     opt = parser.parse_args()
-    opt.save_json |= opt.data.endswith('coco.yaml')
+    opt.save_json |= opt.data.endswith('custom.yaml')
     opt.data = check_file(opt.data)  # check file
     print(opt)
     #check_requirements()

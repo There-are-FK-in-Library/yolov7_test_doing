@@ -1255,7 +1255,7 @@ def flatten_recursive(path='../coco'):
         shutil.copyfile(file, new_path / Path(file).name)
 
 
-def extract_boxes(path='../coco/'):  # from utils.datasets import *; extract_boxes('../coco128')
+def extract_boxes(path='../BDD100k/'):  # from utils.datasets import *; extract_boxes('../coco128')
     # Convert detection dataset into classification dataset, with one directory per class
 
     path = Path(path)  # images dir
